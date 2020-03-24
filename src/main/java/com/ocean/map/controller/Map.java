@@ -41,17 +41,16 @@ public class Map {
     private void init(){
         if(File.separator.equals("\\")){
             pathPrefix = windowsPath;
-            System.out.println("current system:windows");
+            log.info("current system:windows");
         }else{
             pathPrefix = linuxPath;
-            System.out.println("current system:linux");
+            log.info("current system:linux");
         }
     }
 
     @RequestMapping(value = "/map",produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public byte[] getImage(@RequestParam Integer z,@RequestParam Integer x,@RequestParam Integer y) throws IOException {
-
         String path1 = pathPrefix + File.separator + "map_picture" + File.separator + "gaode1" + File.separator +
                 z + File.separator + x + File.separator + y + ".png";
         String path2 = pathPrefix + File.separator + "map_picture" + File.separator + "gaode2" + File.separator +
@@ -68,8 +67,7 @@ public class Map {
             inputStream.read(bytes, 0, inputStream.available());
             return bytes;
         }
-        byte[] cover = ImageUtils.cover(file1, file2);
-        return cover;
+        return ImageUtils.cover(file1, file2);
     }
 
 }
